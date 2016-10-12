@@ -1,0 +1,15 @@
+---
+  - name: Add backports to the Debian sources list
+    apt_repository:
+      repo: deb http://pkg.adfinis-sygroup.ch/debian/ {{ debian_version.name }}-backports main contrib non-free
+      state: present
+
+  - name: Set Backports Priority 
+    template:
+      src: etc/apt/preferences.j2
+      dest: /etc/apt/preferences
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - Upgrade system

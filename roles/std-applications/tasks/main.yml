@@ -1,0 +1,28 @@
+---
+
+- name: Update Debian apt cache
+  apt: update_cache=yes
+
+- name: Install main packages
+  apt: name={{ item }} state=installed
+  with_items:
+    - aptitude
+    - bash-completion
+    - firmware-iwlwifi
+    - gstreamer1.0-libav
+    - gstreamer1.0-plugins-bad
+    - gstreamer1.0-plugins-base
+    - gstreamer1.0-plugins-good
+    - gstreamer1.0-plugins-ugly
+    - inotify-tools
+    - libreoffice
+    - libreoffice-help-de
+    - libreoffice-l10n-de
+    - sudo
+    - vim
+    - xorg
+    - xserver-xorg-core
+    - xserver-xorg-video-intel
+#    - xserver-xorg-video-qxl #virttest
+  notify:
+    - Setup sudo rights for the user

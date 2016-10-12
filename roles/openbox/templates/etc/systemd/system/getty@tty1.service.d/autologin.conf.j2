@@ -1,0 +1,5 @@
+# {{ ansible_managed }}
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin {{ default_user.name }} --noclear %I 38400 linux
+

@@ -1,0 +1,31 @@
+---
+  - name: Install samba
+    apt:
+      name: samba
+      state: present
+
+  - name: Create Samba share
+    file:
+      path: "{{ smb_folder }}"
+      state: directory
+      owner: shp
+      group: shp
+      mode: 0775
+
+  - name: Create "Dateien" folder
+    file:
+      path: "{{ smb_folder }}/Dateien"
+      state: directory
+      owner: shp
+      group: shp
+      mode: 0775
+
+  - name: Create Samba user
+    script: addsmbuser.sh {{ default_user.name }} {{ default_user.password }}
+
+  - name: Copy Samba conf
+    template:
+      src: etc/samba/smb.conf.j2
+      dest: /etc/samba/smb.conf
+    notify:
+      - enable samba

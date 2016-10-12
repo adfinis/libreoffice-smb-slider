@@ -1,0 +1,8 @@
+---
+
+- name: Create {{ default_user.name }} user
+  user:
+    name: "{{ default_user.name }}"
+    password: "{{ default_user.password }}"
+    shell: /bin/bash
+    state: present

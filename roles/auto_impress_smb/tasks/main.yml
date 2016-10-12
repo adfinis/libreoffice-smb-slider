@@ -1,0 +1,17 @@
+---
+
+  - name: Install inotify script
+    template:
+      src: home/shp/auto_impress_through_smb.sh.j2
+      dest: /home/shp/impress_smb_watcher.sh
+      owner: "{{ default_user.name }}"
+      group: "{{ default_user.name }}"
+      mode: 0644
+
+  - name: Install Seehotel LibreOffice template
+    copy:
+      src: seehotel_libreoffice_template.odp
+      dest: /var/smb_slides/seehotel_libreoffice_template.odp
+      owner: "{{ default_user.name }}"
+      group: "{{ default_user.name }}"
+      mode: 0644

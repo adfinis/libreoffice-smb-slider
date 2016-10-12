@@ -1,0 +1,56 @@
+---
+
+  - name: Install openbox
+    apt: 
+      name: "{{ item }}"
+      state: installed
+    with_items:
+      - openbox
+      - menu
+
+  - name: Create Systemd folder for autologin 
+    file:
+      path: /etc/systemd/system/getty@tty1.service.d
+      state: directory
+ 
+  - name: Configure autologin
+    template: 
+      src: etc/systemd/system/getty@tty1.service.d/autologin.conf.j2
+      dest: /etc/systemd/system/getty@tty1.service.d/autologin.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify: 
+      - start autologin
+
+  - name: Configure bash_profile
+    template:
+      src: home/shp/.bash_profile.j2
+      dest: /home/shp/.bash_profile
+      owner: "{{ default_user.name }}"
+      group: "{{ default_user.name }}"
+      mode: 0644
+
+  - name: make autostart dir
+    file:
+      path: /home/shp/.config/openbox
+      state: directory
+      owner: "{{ default_user.name }}"
+      group: "{{ default_user.name }}"
+
+  
+  - name: Configure Script autostart
+    template:
+      src: home/shp/.config/openbox/autostart.j2
+      dest: /home/shp/.config/openbox/autostart
+      owner: "{{ default_user.name }}"
+      group: "{{ default_user.name }}"
+      mode: 0644
+
+  - name: Configure xinitrc
+    template:
+      src: home/shp/.xinitrc.j2
+      dest: /home/shp/.xinitrc
+      owner: "{{ default_user.name }}"
+      group: "{{ default_user.name }}"
+      mode: 0644

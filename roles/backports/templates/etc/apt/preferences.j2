@@ -1,0 +1,5 @@
+#{{ ansible_managed }}
+# APT PINNING PREFERENCES
+Package: *
+Pin: release a={{ debian_version.name }}-backports
+Pin-Priority: 900

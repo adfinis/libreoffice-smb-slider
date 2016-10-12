@@ -1,0 +1,6 @@
+---
+
+  - name: enable samba
+    service:
+      name: smbd.service
+      enabled: yes

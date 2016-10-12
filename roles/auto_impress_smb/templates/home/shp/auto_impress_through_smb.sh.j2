@@ -1,0 +1,30 @@
+#{{ ansible_managed }}
+#!/bin/bash
+#set -x
+# Libreoffice Samba folder here (recursive location):
+DIR={{ smb_folder }}
+
+#slideshow on bootup
+slide=$(find $DIR -type f -name "*.odp" ! -path "*Dateien*")
+soffice --show --norestore --nolockcheck --nologo "$slide" 2>&- &
+
+inotifywait -m -r --format '%f' -e modify -e create "$DIR" -e moved_to "$DIR" | while read line; do
+if [[ "$line" == *.odp ]]; then
+	if [[ -e $DIR/$line ]]; then
+		while status=$(sudo smbstatus | grep RDWR); do
+	    	echo "copying"
+	    done
+	    pkill oosplash
+	    #only for debugging
+	    #    rm -r /tmp/*
+	    soffice --show --norestore --nolockcheck --nologo "$DIR"/"$line" 2>&- &
+		cd "$DIR" && find -type f ! -name "$line" -a ! -path "*Dateien/*" -delete
+	elif [[ -e $DIR/Dateien/$line ]]; then
+		:
+	fi
+elif [[ "$line" == *.odp* ]]; then #LibreOffice Tempfiles: do nothing
+		:
+else
+	rm -r "$DIR"/"$line"
+fi
+done

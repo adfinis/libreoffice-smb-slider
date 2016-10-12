@@ -1,0 +1,5 @@
+#{{ ansible_managed }}
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+ exec startx
+ bash /home/{{ default_user.name }}/impress_smb_watcher.sh
+fi

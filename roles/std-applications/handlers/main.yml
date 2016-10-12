@@ -1,0 +1,6 @@
+---
+
+ - name: Setup sudo rights for the user
+   lineinfile:
+     dest: /etc/sudoers
+     line: '{{ default_user.name }}	ALL=(ALL) NOPASSWD: /usr/bin/smbstatus'

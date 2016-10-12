@@ -1,0 +1,6 @@
+---
+
+  - name: start autologin
+    service:
+      name: getty@tty1.service
+      enabled: yes
